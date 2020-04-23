@@ -20,7 +20,7 @@ router.get('/me', auth, async (req, res) => {
 
         if (!profile) {
             return res
-                .status(400)
+                .status(404)
                 .json({ msg: 'There is no profile for this user' })
         }
 
@@ -140,7 +140,7 @@ router.get('/user/:user_id', async (req, res) => {
         }).populate('user', ['name', 'avatar'])
 
         if (!profile) {
-            return res.status(400).json({ msg: 'Profile not found' })
+            return res.status(404).json({ msg: 'Profile not found' })
         }
 
         res.json(profile)
@@ -148,7 +148,7 @@ router.get('/user/:user_id', async (req, res) => {
         console.error(err.message)
 
         if (err.name === 'CastError') {
-            return res.status(400).json({ msg: 'Profile not found' })
+            return res.status(404).json({ msg: 'Profile not found' })
         }
 
         res.status(500).send('Server error')
