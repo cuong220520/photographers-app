@@ -5,22 +5,32 @@ import NavBar from './components/layouts/NavBar'
 import Landing from './components/layouts/Landing'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
+import Alert from './components/layouts/Alert'
 
 import './App.css'
 
+// redux
+import { Provider } from 'react-redux'
+import store from './store'
+
 const App = () => (
-    <Router>
-        <Fragment>
-            <NavBar />
+    <Provider store={store}>
+        <Router>
+            <Fragment>
+                <NavBar />
 
-            <Route exact path='/' component={Landing} />
+                <Route exact path='/' component={Landing} />
 
-            <section className='container'>
-                <Route exact path='/register' component={Register} />
-                <Route exact path='/login' component={Login} />
-            </section>
-        </Fragment>
-    </Router>
+                <section className='container'>
+                    <Alert />
+                    <Switch>
+                        <Route exact path='/register' component={Register} />
+                        <Route exact path='/login' component={Login} />
+                    </Switch>
+                </section>
+            </Fragment>
+        </Router>
+    </Provider>
 )
 
 export default App
