@@ -79,7 +79,7 @@ router.post(
         if (skills) {
             profileFields.skills = skills
                 .split(',')
-                .map((skill) => skill.trim())
+                .map((skill) => skill.trim().toUpperCase())
         }
 
         // build social object
@@ -199,7 +199,6 @@ router.put(
             location,
             from,
             to,
-            current,
             description,
         } = req.body
 
@@ -209,7 +208,6 @@ router.put(
             location,
             from,
             to,
-            current,
             description,
         }
 
@@ -275,7 +273,6 @@ router.put(
             school,
             degree,
             fieldOfStudy,
-            location,
             from,
             to,
             current,
@@ -286,7 +283,6 @@ router.put(
             school,
             degree,
             fieldOfStudy,
-            location,
             from,
             to,
             current,
