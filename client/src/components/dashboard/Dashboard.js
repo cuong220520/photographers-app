@@ -6,12 +6,15 @@ import { connect } from 'react-redux'
 
 import Spinner from '../layouts/Spinner'
 import DashboardActions from './DashboardActions'
-import { getCurrentProfile } from '../../actions/profile'
+import Experience from './Experience'
+import { getCurrentProfile, deleteAccount } from '../../actions/profile'
+import Education from './Education'
 
 const Dashboard = ({
     getCurrentProfile,
     profile: { profile, loading },
     auth: { user },
+    deleteAccount
 }) => {
     useEffect(() => {
         getCurrentProfile()
@@ -30,11 +33,24 @@ const Dashboard = ({
             {profile !== null ? (
                 <Fragment>
                     <DashboardActions />
+                    <Experience experience={profile.experience} />
+                    <Education education={profile.education} />
+
+                    <div className='my-2' onClick={() => deleteAccount()}>
+                        <button className='btn btn-danger'>
+                            <i className='fas fa-user-minus' /> Delete My
+                            Account
+                        </button>
+                    </div>
                 </Fragment>
             ) : (
                 <Fragment>
-                    <p>You have not yet set up a profile, please add some info</p>
-                    <Link to='/create-profile' className='btn btn-primary my-1'>Create Profile</Link>
+                    <p>
+                        You have not yet set up a profile, please add some info
+                    </p>
+                    <Link to='/create-profile' className='btn btn-primary my-1'>
+                        Create Profile
+                    </Link>
                 </Fragment>
             )}
         </Fragment>
@@ -45,6 +61,7 @@ Dashboard.propTypes = {
     profile: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     getCurrentProfile: PropTypes.func.isRequired,
+    deleteAccount: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -52,4 +69,4 @@ const mapStateToProps = (state) => ({
     auth: state.auth,
 })
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard)
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(Dashboard)

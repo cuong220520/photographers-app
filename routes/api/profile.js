@@ -8,6 +8,7 @@ const auth = require('../../middleware/auth')
 
 const Profile = require('../../models/Profile')
 const User = require('../../models/User')
+const Post = require('../../models/Post')
 
 // @route   GET api/profile/me
 // @desc    Get current users profile
@@ -160,6 +161,9 @@ router.get('/user/:user_id', async (req, res) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
     try {
+        // remove post
+        await Post.deleteMany({ user: req.user.id })
+
         // remove profile
         await Profile.findOneAndRemove({ user: req.user.id })
 
@@ -316,7 +320,7 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
             .map((item) => item.id)
             .indexOf(req.params.edu_id)
 
-        profile.experience.splice(removeIndex, 1)
+        profile.education.splice(removeIndex, 1)
 
         await profile.save()
 
