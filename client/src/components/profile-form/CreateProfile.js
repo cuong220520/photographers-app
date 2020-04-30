@@ -1,10 +1,10 @@
 import React, { useState, Fragment } from 'react'
-import { Link, withRouter, Redirect } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 
-import { createProfile, getCurrentProfile } from '../../actions/profile'
+import { createProfile } from '../../actions/profile'
 
 const CreateProfile = ({ createProfile, history }) => {
     const [formData, setFormData] = useState({
@@ -46,10 +46,6 @@ const CreateProfile = ({ createProfile, history }) => {
         event.preventDefault()
 
         createProfile(formData, history)
-    }
-
-    if (getCurrentProfile()) {
-        return <Redirect to='/edit-profile' />
     }
 
     return (
@@ -184,6 +180,7 @@ const CreateProfile = ({ createProfile, history }) => {
                                 name='twitter'
                                 value={twitter}
                                 onChange={(event) => onChange(event)}
+                                defaultValue={''}
                             />
                         </div>
 
@@ -243,8 +240,7 @@ const CreateProfile = ({ createProfile, history }) => {
 }
 
 CreateProfile.propTypes = {
-    createProfile: PropTypes.func.isRequired,
-    getCurrentProfile: PropTypes.func.isRequired
+    createProfile: PropTypes.func.isRequired
 }
 
-export default connect(null, { createProfile, getCurrentProfile })(withRouter(CreateProfile))
+export default connect(null, { createProfile })(withRouter(CreateProfile))

@@ -85,6 +85,11 @@ router.post(
 
         // build social object
         profileFields.social = {}
+
+        // if (!profileFields.social) {
+        //     profileFields.social = null
+        // }
+
         if (youtube) profileFields.social.youtube = youtube
         if (facebook) profileFields.social.facebook = facebook
         if (instagram) profileFields.social.instagram = instagram

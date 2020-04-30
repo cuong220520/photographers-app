@@ -97,6 +97,7 @@ export const getGithubRepos = username => async (dispatch) => {
 export const createProfile = (formData, history, edit = false) => async (
     dispatch
 ) => {
+    
     try {
         const config = {
             headers: {
@@ -105,7 +106,6 @@ export const createProfile = (formData, history, edit = false) => async (
         }
 
         const res = await axios.post('/api/profile', formData, config)
-        dispatch(getCurrentProfile())
 
         dispatch({
             type: GET_PROFILE,
