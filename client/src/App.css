@@ -146,6 +146,7 @@ img {
     margin: 0.3rem;
     background: var(--light-color);
     color: #333;
+    list-style: none;
 }
 
 .alert {
