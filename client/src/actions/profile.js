@@ -16,13 +16,13 @@ export const getCurrentProfile = () => async (dispatch) => {
     try {
         const res = await axios.get('/api/profile/me')
 
+        console.log(res)
+
         dispatch({
             type: GET_PROFILE,
             payload: res.data,
         })
     } catch (err) {
-        dispatch({ CLEAR_PROFILE })
-
         dispatch({
             type: PROFILE_ERROR,
             payload: {
