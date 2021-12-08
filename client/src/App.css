@@ -489,6 +489,24 @@ button {
     margin-bottom: 0.5rem;
 }
 
+.uploaded-images-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    grid-gap: 1rem;
+    padding: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    box-sizing: border-box;
+    height: 20vh;
+}
+
+.uploaded-image-sm {
+    height: 200px;
+    width: 200px;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
     .container {
