@@ -11,6 +11,7 @@ export const ProfileAlbum = ({
 }) => {
   useEffect(() => {
     getUserById(match.params.userId)
+    // eslint-disable-next-line
   }, [])
 
   return !user || loading ? (
@@ -21,7 +22,7 @@ export const ProfileAlbum = ({
         Back To Profiles
       </Link>
       <h1 style={{ marginTop: '2rem' }}>Photos album</h1>
-      <div className='container'>
+      <div>
         {user.photos && user.photos.length > 0 ? (
           <div className='uploaded-images-container'>
             {user.photos.map((photo, key) => (

@@ -493,13 +493,13 @@ button {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     align-items: center;
+    justify-content: center;
     grid-gap: 1rem;
     padding: 1rem;
     line-height: 1.8;
     margin-bottom: 1rem;
     margin-top: 1rem;
     box-sizing: border-box;
-    height: 20vh;
 }
 
 .uploaded-image-sm {

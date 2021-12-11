@@ -30,7 +30,6 @@ const CreateProfile = ({ createProfile, history }) => {
     location,
     bio,
     status,
-    githubUsername,
     skills,
     youtube,
     facebook,

@@ -51,8 +51,18 @@ const App = () => {
             <Switch>
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
-              <Route exact path='/profiles' component={Profiles} />
-              <Route exact path='/profile/:user_id' component={Profile} />
+              <PrivateRoute
+                exact
+                path='/profiles'
+                component={Profiles}
+                expectedAuthorities={['user', 'photographer', 'admin']}
+              />
+              <PrivateRoute
+                exact
+                path='/profile/:user_id'
+                component={Profile}
+                expectedAuthorities={['user', 'photographer', 'admin']}
+              />
               <PrivateRoute
                 exact
                 path='/403error'

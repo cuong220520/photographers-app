@@ -7,6 +7,7 @@ const auth = require('../../middleware/auth')
 
 const User = require('../../models/User')
 const Post = require('../../models/Post')
+const { asyncForEach } = require('../../middleware/utils')
 
 // @route   POST api/post
 // @desc    Create a post
@@ -288,6 +289,48 @@ router.get('/get-by-user/:userId', auth, async (req, res) => {
     const posts = await Post.find({ user: userId }).sort({ date: -1 })
 
     res.json(posts)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server error')
+  }
+})
+
+// @route   POST api/post/search
+// @desc    Search posts by user
+// @access  Private
+router.post('/search', auth, async (req, res) => {
+  const { term } = req.body
+
+  let text = ''
+  let name = ''
+  let username = ''
+
+  if (!!term) {
+    text = new RegExp(term, 'i')
+    name = new RegExp(term, 'i')
+    username = new RegExp(term, 'i')
+  }
+
+  try {
+    const users = await User.find({ email: username }).exec()
+
+    if (users && users.length > 0) {
+      let posts = []
+
+      await asyncForEach(users, async (user) => {
+        const post = await Post.findOne({ user: user._id }).exec()
+
+        if (post) {
+          posts.unshift(post)
+        }
+      })
+
+      return res.status(200).json(posts)
+    } else {
+      const posts = await Post.find({ $or: [{ text }, { name }] }).exec()
+
+      return res.status(200).json(posts)
+    }
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server error')

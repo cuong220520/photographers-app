@@ -11,7 +11,6 @@ import ProfileTop from './ProfileTop'
 import ProfileAbout from './ProfileAbout'
 import ProfileExperience from './ProfileExperience'
 import ProfileEducation from './ProfileEducation'
-import ProfileGithub from './ProfileGithub'
 import PostItem from '../posts/PostItem'
 
 const Profile = ({
@@ -25,6 +24,7 @@ const Profile = ({
   useEffect(() => {
     getProfileById(match.params.user_id)
     getPostsByUser(match.params.user_id)
+    // eslint-disable-next-line
   }, [getProfileById, match])
 
   return (

@@ -19,20 +19,25 @@ const PostForm = ({ addPost }) => {
       <div className='bg-primary p'>
         <h3>What are you thinking?</h3>
       </div>
-      <header className='form-header'>
+      <div className='form-header'>
         {images && images.length > 0 && (
           <div className='uploaded-images-container'>
             {images.map((image, key) => (
-              <img className='uploaded-image-sm' key={key} src={`${image}`} />
+              <img
+                className='uploaded-image-sm'
+                key={key}
+                src={`${image}`}
+                alt='uploaded'
+              />
             ))}
           </div>
-        )}<br />
+        )}
+        <br />
         <label style={{ padding: '1rem' }}>
           <FileUpload refreshFunction={uploadImage} />
           <i className='fas fa-edit fa-2x' />
         </label>
-        <h3 className='edit-profile__username'></h3>
-      </header>
+      </div>
       <form
         className='form my-1'
         onSubmit={(event) => {

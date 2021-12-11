@@ -25,22 +25,26 @@ export const getAllUsers = () => async (dispatch) => {
 }
 
 export const deleteUser = (id) => async (dispatch) => {
-  try {
-    await axios.delete(`/api/users/${id}`)
+  if (window.confirm('Are you sure? This can NOT be undone!')) {
+    try {
+      await axios.delete(`/api/users/${id}`)
 
-    dispatch({
-      type: DELETE_USER
-    })
+      dispatch({
+        type: DELETE_USER,
+      })
 
-    dispatch(setAlert('User deleted', 'success'))
-  } catch (err) {
-    dispatch({
-      type: USER_ERROR,
-      payload: {
-        msg: err.response.statusText,
-        status: err.response.status,
-      },
-    })
+      dispatch(setAlert('User deleted', 'success'))
+
+      dispatch(getAllUsers())
+    } catch (err) {
+      dispatch({
+        type: USER_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status,
+        },
+      })
+    }
   }
 }
 

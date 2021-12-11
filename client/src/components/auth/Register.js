@@ -83,7 +83,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             onChange={(event) => onChange(event)}
           />
         </div>
-        {role}
         <div className='form-group'>
           <select
             name='role'

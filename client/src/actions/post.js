@@ -231,3 +231,23 @@ export const getPostsByUser = (userId) => async (dispatch) => {
     })
   }
 }
+
+// search posts
+export const searchPosts = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.post('/api/post/search', formData)
+
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data,
+    })
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status,
+      },
+    })
+  }
+}

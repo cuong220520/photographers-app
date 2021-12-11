@@ -1,18 +1,36 @@
 import React, { useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
 import Spinner from '../layouts/Spinner'
-import { getAllUsers } from '../../actions/user'
-import { getCurrentProfile, deleteAccount } from '../../actions/profile'
+import { deleteUser, getAllUsers } from '../../actions/user'
+import {
+  getCurrentProfile,
+  deleteAccount,
+  getSkillCounts,
+} from '../../actions/profile'
+import PieChart from './PieChart'
 
-const Admin = ({ auth: { user }, deleteAccount, getAllUsers, users }) => {
+const Admin = ({
+  auth: { user },
+  getSkillCounts,
+  getAllUsers,
+  users,
+  profile: { profileCount, loading },
+  deleteUser
+}) => {
   useEffect(() => {
     getAllUsers()
+    getSkillCounts()
+    // eslint-disable-next-line
   }, [])
-  return !user ? (
+
+  const deleteUserById = (id) => {
+    deleteUser(id)
+  }
+
+  return !user || loading || !profileCount ? (
     <Spinner />
   ) : (
     <Fragment>
@@ -31,8 +49,7 @@ const Admin = ({ auth: { user }, deleteAccount, getAllUsers, users }) => {
                 <th>No</th>
                 <th className='hide-sm'>Email</th>
                 <th className='hide-sm'>Name</th>
-                <th className='hide-sm'>Posts</th>
-                <th className='hide-sm'>Likes</th>
+                <th className='hide-sm'>Role</th>
                 <th />
               </tr>
             </thead>
@@ -44,15 +61,26 @@ const Admin = ({ auth: { user }, deleteAccount, getAllUsers, users }) => {
                     <td>{key}</td>
                     <td>{user.email}</td>
                     <td>{user.name}</td>
-                    <td>3</td>
-                    <td>5</td>
-                    <td>
-                      <button className='btn btn-danger'>Delete</button>
-                    </td>
+                    <td>{user.role}</td>
+                    {user.role !== 'admin' && (
+                      <td>
+                        <button
+                          className='btn btn-danger'
+                          onClick={() => deleteUserById(user._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
             </tbody>
           </table>
+
+          <PieChart
+            skillCounts={profileCount.skillCounts}
+            totalCount={profileCount.totalCount}
+          />
         </Fragment>
       </Fragment>
     </Fragment>
@@ -65,6 +93,8 @@ Admin.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   deleteAccount: PropTypes.func.isRequired,
   getAllUsers: PropTypes.func.isRequired,
+  getSkillCounts: PropTypes.func.isRequired,
+  deleteUser: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -77,4 +107,6 @@ export default connect(mapStateToProps, {
   getCurrentProfile,
   deleteAccount,
   getAllUsers,
+  getSkillCounts,
+  deleteUser
 })(Admin)
